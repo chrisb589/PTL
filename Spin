@@ -1,0 +1,78 @@
+SPINNER RECIPE PTL
+
+// 20L_CAL_1_OP (Embedded Calculation OP for Culture 1)
+
+// Instance ID: RecordVolumeCCFAvailable
+
+// Instance ID: Select20LInocTargetCultureDuration
+
+	//PREREQ:
+
+		if
+		(
+		(
+		Accessor.GetCompleteCount("RecordVolumeCCFAvailable") > 0
+		&&
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") == 0
+		)
+		||
+		(
+		Accessor.NumberVariable("Parent.SelectCCFAvailable.OperatorResponse",0) == 3
+		&&
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") == Accessor.GetCompleteCount("SelectCCFAvailable")
+		&&
+		Accessor.GetCompleteCount("ConfirmComplete") == 0
+		)
+		)
+		{
+		Accessor.SetVariable("Parent.Calculation20LInoculation2-3Day.20L Inoc - 2-3 Day", 0, StickyFlag.Element);
+		Accessor.SetVariable("Parent.Calculation20LInoculation4Day.20L Inoc - 4 Day", 0, StickyFlag.Element);
+		Accessor.SetVariable("Parent.Calculation20LInoculation5Day.20L Inoc - 5 Day", 0, StickyFlag.Element);
+		Accessor.SetVariable("Parent.CalculationCCF.CCF Available", 0, StickyFlag.Element);
+
+		return true;
+		}
+		else
+		return false;
+
+	//POSTACTION:
+
+		if (Accessor.IsComplete())
+		{
+		            Accessor.SetStatus("SelectCCFAvailable", PFCElementStatus.Pending);
+		            Accessor.SetStatus("Select20LInocTargetCultureDuration", PFCElementStatus.Pending);
+		}             
+		return true;
+
+// Instance ID: Calculation20LInoculation2-3Day
+
+	//PREREQ:
+		(
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") == 1
+		&&
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") != Accessor.GetCompleteCount("Calculation20LInoculation2-3Day")
+		&&
+		Accessor.NumberVariable("Parent.Select20LInocTargetCultureDuration.OperatorResponse",0) == 2
+		)
+		||
+		(
+		Accessor.NumberVariable("Parent.SelectCCFAvailable.OperatorResponse",0) == 3
+		&&
+		Accessor.NumberVariable("Parent.Select20LInocTargetCultureDuration.OperatorResponse",0) == 2
+		&&
+		(
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") != 
+		(
+		Accessor.GetCompleteCount("Calculation20LInoculation2-3Day") + 
+		Accessor.GetCompleteCount("Calculation20LInoculation4Day") +
+		Accessor.GetCompleteCount("Calculation20LInoculation5Day")
+		)
+		)
+		)
+
+	//POSTACTION:
+		if (Accessor.IsComplete())
+
+		      Accessor.SetStatus("Calculation20LInoculation2-3Day", PFCElementStatus.Pending);
+
+		return true;
