@@ -25,7 +25,7 @@ SPINNER RECIPE PTL
 		)
 		)
 		{
-		Accessor.SetVariable("Parent.Calculation20LInoculation2-3Day.20L Inoc - 2-3 Day", 0, StickyFlag.Element);
+		Accessor.SetVariable("Parent.Calculation20LInoculation3Day.20L Inoc - 2-3 Day", 0, StickyFlag.Element);
 		Accessor.SetVariable("Parent.Calculation20LInoculation4Day.20L Inoc - 4 Day", 0, StickyFlag.Element);
 		Accessor.SetVariable("Parent.Calculation20LInoculation5Day.20L Inoc - 5 Day", 0, StickyFlag.Element);
 		Accessor.SetVariable("Parent.CalculationCCF.CCF Available", 0, StickyFlag.Element);
@@ -44,13 +44,13 @@ SPINNER RECIPE PTL
 		}             
 		return true;
 
-// Instance ID: Calculation20LInoculation2-3Day
+// Instance ID: Calculation20LInoculation3Day
 
 	//PREREQ:
 		(
 		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") == 1
 		&&
-		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") != Accessor.GetCompleteCount("Calculation20LInoculation2-3Day")
+		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") != Accessor.GetCompleteCount("Calculation20LInoculation3Day")
 		&&
 		Accessor.NumberVariable("Parent.Select20LInocTargetCultureDuration.OperatorResponse",0) == 2
 		)
@@ -63,7 +63,7 @@ SPINNER RECIPE PTL
 		(
 		Accessor.GetCompleteCount("Select20LInocTargetCultureDuration") != 
 		(
-		Accessor.GetCompleteCount("Calculation20LInoculation2-3Day") + 
+		Accessor.GetCompleteCount("Calculation20LInoculation3Day") + 
 		Accessor.GetCompleteCount("Calculation20LInoculation4Day") +
 		Accessor.GetCompleteCount("Calculation20LInoculation5Day")
 		)
@@ -73,6 +73,6 @@ SPINNER RECIPE PTL
 	//POSTACTION:
 		if (Accessor.IsComplete())
 
-		      Accessor.SetStatus("Calculation20LInoculation2-3Day", PFCElementStatus.Pending);
+		      Accessor.SetStatus("Calculation20LInoculation3Day", PFCElementStatus.Pending);
 
 		return true;
